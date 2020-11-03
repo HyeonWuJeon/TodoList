@@ -1,31 +1,42 @@
 <template>
   <div id = 'app' class ='container'>
     <h1 class='text-center'>Todo App</h1>
-    <input 
+    <!-- 자식에서 올라온 이벤트를 받는다. -->
+    <AddTodo @add-todo="addTodo"/> 
+    <CompletedTodo :todos ='todos'/>
+    <!-- <input  AddTodo.vue 로 이동
     v-model="todoText"
     type="text" 
     class="w-100 p-2" 
     placeholder="Type todo"
     @keyup.enter="addTodo"
-    >
-    <!-- <button @click="addTodo">Click</button>  -->
+    > -->
     <hr>
-    <!-- Todo  컴포넌트를 사용하고  todos의 데이터를 뿌려준다 / 자식데이터를 가져온다. -->
-    <Todo v-for="todo in todos"  
+    <!-- Todo  컴포넌트를 사용하고  todos의 데이터를 뿌려준다 / 자식에게 데이터전송, @ : 자식데이터를 가져온다. -->
+    <!-- <Todo v-for="todo in todos"  
     :key="todo.id"
     :todo="todo"
     @toggle-checkbox ="toggleCheckbox"
     @click-delete = "deleteTodo"
-    />
-      
+    /> -->
+      <TodoList  :todos="todos"
+      @toggle-checkbox="toggleCheckbox"
+      @click-delete="deleteTodo"
+      />
   </div>
 </template>
 
 <script>
-import Todo from '@/components/Todo.vue';
+// import Todo from '@/components/Todo.vue';
+import TodoList from '@/components/TodoList';
+import AddTodo from '@/components/AddTodo'; 
+import CompletedTodo from '@/components/CompletedTodo';
 export default {
   components:{
-    Todo
+    TodoList,
+    AddTodo,
+    CompletedTodo
+    // Todo
   },
   data() {
     return {
@@ -44,14 +55,14 @@ export default {
       //   return todo.id ===id;
       // });
       // this.todos.splice(index, 1); // 삭제할 인덱스, 1개
-      this.todos = this.todos.filter(todo => todo.id !== id); // 입력값을 제외한 나머지값을 배열에 채워준다.
+      this.todos = this.todos.filter(todo => todo.id !== id); // 입력값을 제외한 나머지값을 배열에
 
     },
-    addTodo(e) {
-      console.log(e.target.value);
+    addTodo(value) {
+      console.log(value);
       this.todos.push({
         id: Math.random(),
-        text: e.target.value,
+        text: value,
         checked: false
       });
       this.todoText='';

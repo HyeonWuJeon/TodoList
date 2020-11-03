@@ -1,3 +1,6 @@
+- 부모인 TODOLIST 에게 데이터를 받아온다.
+- check, delete 내용을 부모인 TODOLIST 에게 전해준다.
+
 <template>
     <div class="mb-2 d-flex">
         <div>
@@ -16,7 +19,7 @@
 
 <script>
 export default {
-    props: {
+    props: {  // 부모가 전달해준 데이터를 받아온다. : TODOLIST 로 부터 데이터를 받아온다.
         todo: {
             type: Object,
             required: true
